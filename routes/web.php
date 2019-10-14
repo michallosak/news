@@ -13,4 +13,7 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
+
+Auth::routes();
+Route::post('register', 'Auth\RegisterController@register')->name('register');

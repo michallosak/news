@@ -84,6 +84,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | ADMIN
+    |--------------------------------------------------------------------------
+     */
+
+    'admin_email' => env('ADMIN_EMAIL', 'admin@example.com'),
+    'admin_password' => env('ADMIN_PASSWORD', 'qwe123'),
+    'admin_role' => env('ADMIN_ROLE', 'R_ADMIN'),
+    'admin_name' => env('ADMIN_NAME', 'Michał'),
+    'admin_last_name' => env('ADMIN_LAST_NAME', 'Łosak'),
+    'admin_username' => env('ADMIN_USERNAME', 'micky14'),
+    'admin_sex' => env('ADMIN_SEX',2),
+    'admin_birthday' => env('ADMIN_BIRTHDAY', '30.08.2000'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Fallback Locale
     |--------------------------------------------------------------------------
     |
