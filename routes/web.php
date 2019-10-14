@@ -17,3 +17,25 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::post('register', 'Auth\RegisterController@register')->name('register');
+
+Route::group(['middleware' => 'auth'], function (){
+
+    //
+
+    Route::get('activate', 'Auth\ActivateController@index')->name('activate');
+    Route::post('activate', 'Auth\ActivateController@activate')->name('activate-acc');
+
+    Route::group(['middleware' => 'activate'], function (){
+
+        //
+
+    });
+
+
+    Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function (){
+
+        //
+
+        Route::get('admin', 'Admin\AdminController@index')->name('admin');
+    });
+});

@@ -18,7 +18,8 @@ class AdminAccountSeeder extends Seeder
         $user = User::create([
             'email' => config('app.admin_email'),
             'password' => config('app.admin_password'),
-            'role' => config('app.admin_role')
+            'role' => config('app.admin_role'),
+            'activated' => 1 //activated = true
         ]);
         $s = SpecificUser::create([
             'user_id' => $user->id,

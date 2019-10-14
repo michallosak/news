@@ -4,6 +4,8 @@
 namespace App\Http\Repositories\Auth;
 
 
+use App\Http\Repositories\Emails\MailRepository;
+use App\Model\Auth\Verify;
 use App\Model\User\AvatarUser;
 use App\Model\User\SpecificUser;
 use App\User;
@@ -12,6 +14,15 @@ use Illuminate\Support\Facades\Hash;
 class AuthRepository
 {
 
+    protected $verify;
+    protected $mailRepo;
+
+    public function __construct(Verify $verify, MailRepository $mailRepo)
+    {
+        $this->verify = $verify;
+        $this->mailRepo = $mailRepo;
+    }
+
     public function register($data)
     {
         $user = $this->saveUser($data->email, $data->password);
@@ -19,6 +30,8 @@ class AuthRepository
         $s = $this->saveSpecificUser($data, $userID);
         $avatar = $this->checkSex($s->sex);
         $this->saveAvatar($avatar, $userID);
+        $key = $this->verify->saveVerifyKey($userID);
+        $this->mailRepo->sendMailVerify($user->email, $key);
         return $user;
     }
 
@@ -64,5 +77,14 @@ class AuthRepository
         ]);
 
         return true;
+    }
+
+    public function activate($key){
+        $verify = $this->verify->checkingKeys($key);
+        if ($verify === true)
+        {
+            $this->mailRepo->sendMailWelcome();
+        }
+        return $verify;
     }
 }
